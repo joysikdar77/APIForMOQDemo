@@ -6,6 +6,7 @@ using ServiceLayer.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,10 +19,12 @@ namespace Infrastructure
             services.AddScoped<IShipmentService, ShipmentService>();
             services.AddScoped<IPaymentService, PaymentServices>();
             services.AddScoped<ICartService, CartService>();
+            services.AddScoped<ICustomerService, CustomerService>();
 
             services.AddScoped<IShipmentActions, ShipmentActions>();
             services.AddScoped<IPaymentActions, PaymentActions>();
             services.AddScoped<ICartActions, CartActions>();
+            services.AddScoped<ICustomerAction, CustomerAction>();
             return services;
         }
     }

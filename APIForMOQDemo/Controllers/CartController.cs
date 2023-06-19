@@ -12,11 +12,15 @@ namespace APIForMOQDemo.Controllers
         private readonly ICartService _cartService;
         private readonly IPaymentService _paymentService;
         private readonly IShipmentService _shipmentService;
-        public CartController(ICartService cartService, IPaymentService paymentService, IShipmentService shipmentService)
+        private readonly ICustomerService _customerService;
+        private readonly ICleanUserService _cleanUserService;
+        public CartController(ICartService cartService, IPaymentService paymentService, IShipmentService shipmentService, ICustomerService customerService, ICleanUserService cleanUserService)
         {
             _cartService = cartService;
             _paymentService = paymentService;
             _shipmentService = shipmentService;
+            _customerService = customerService;
+            _cleanUserService = cleanUserService;
         }
 
         [HttpPost]
@@ -32,6 +36,18 @@ namespace APIForMOQDemo.Controllers
             {
                 return "not charged";
             }
+        }
+
+        [HttpGet]
+        public string GetUserGreetings(UserInfo userInfo)
+        {
+            _cleanUserService.Clean(userInfo);
+            return string.Format("Welcome {0} {1}", userInfo.FirstName, userInfo.LastName);
+        }
+
+        public UserInfo GetUserInfo(int userID)
+        {
+            return _customerService.getUserInfo(userID);
         }
     }
 }
